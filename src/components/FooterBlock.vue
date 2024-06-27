@@ -15,9 +15,9 @@
 }
 
 .footer-block__wrapper {
-  border-radius: var(--border-radius);
+  border-radius: 0 16px 16px 16px;
   padding: 24px;
-  background-color: var(--back-light);
+  background-color: var(--back-light-blue);
 }
 
 .footer-block__text {

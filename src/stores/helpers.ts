@@ -1,7 +1,7 @@
 import { IError } from './types';
 
 export const setIsLogged = (isLogged = true) => {
-  localStorage.setItem('isLogged', isLogged ? 'true' : '');
+  localStorage.setItem('is-logged', isLogged ? 'true' : '');
 }
 
 export const handleError = (error: IError) => {

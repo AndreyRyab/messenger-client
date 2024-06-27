@@ -67,6 +67,9 @@ export const useUserStore = defineStore('users', () => {
     } catch (error) {
       user.value.loadingStatus = FAILED;
 
+      setIsLogged(false);
+      user.value.isAuthenticated = false;
+
       handleError(error as IError);
     }
   };
@@ -80,6 +83,7 @@ export const useUserStore = defineStore('users', () => {
       user.value.loadingStatus = SUCCESS;
       user.value.isAuthenticated = true;
       user.value.email = data.email;
+      user.value._id = data._id;
     } catch (error) {
       user.value.loadingStatus = FAILED;
 
@@ -104,7 +108,7 @@ export const useUserStore = defineStore('users', () => {
       user.value.email = null;
       user.value._id = null;
       user.value.isAuthenticated = false;
-      setIsLogged(false);
+      localStorage.clear();
     }
   };
 

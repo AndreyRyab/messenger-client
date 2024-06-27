@@ -7,3 +7,9 @@ export interface IUser {
   password?: string | null,
   _id?: string | null,
 }
+
+export interface IMessage {
+  date: number;
+  text: string;
+  user: string;
+}

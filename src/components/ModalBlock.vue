@@ -1,20 +1,23 @@
 <template>
-  <div
-    :class="['modal-block', { 'modal-block_visible': modelValue }]"
-    @click="closeModal"
-    @keyup.esc="closeModal"
-  >
-    <div class="modal-block__content" @click.stop>
-      <button
-        class="modal-block__button"
-        @click="closeModal"
-      >
-        <span class="modal-block__button-text">+</span>
-      </button>
-      
-      <AuthForm :action="action" @close-modal="closeModal"></AuthForm>
+  <Transition name="modal-block">
+    <div
+      v-if="show"
+      class="modal-block"
+      @click="closeModal"
+      @keyup.esc="closeModal"
+    >
+      <div class="modal-block__content" @click.stop>
+        <button
+          class="modal-block__button"
+          @click="closeModal"
+        >
+          <span class="modal-block__button-text">+</span>
+        </button>
+        
+        <AuthForm :action="action" @close-modal="closeModal"></AuthForm>
+      </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <script setup lang="ts">
@@ -26,15 +29,15 @@ import { ESC_CODE } from '../constants/common';
 import { ActionAuthType } from '../types';
 
 defineProps<{
-  modelValue: boolean;
+  show: boolean;
   action: ActionAuthType | null;
 }>();
 
 const emits = defineEmits({
-  'update:model-value': null,
+  'close': null,
 });
 
-const closeModal = () => emits('update:model-value', false);
+const closeModal = () => emits('close');
 
 const handleCloseOnEsc = (event: { keyCode: number }) => {
   if (event.keyCode === ESC_CODE) closeModal();
@@ -55,13 +58,9 @@ onUnmounted(() => document.removeEventListener('keyup', handleCloseOnEsc))
   height: 100%;
   padding-top: 3rem;
   background-color: var(--back-dark-transparent);
-  display: none;
-  transition: visibility 400ms ease-in-out;
+  display: flex;
+  transition: opacity 0.3s ease;
 }
-
-.modal-block_visible {
-  display: block;
-} 
 
 .modal-block__content {
   position: relative;
@@ -75,6 +74,7 @@ onUnmounted(() => document.removeEventListener('keyup', handleCloseOnEsc))
   align-items: center;
   padding: 42px 38px;
   background-color: var(--back-light);
+  transition: all 0.3s ease;
 }
 
 .modal-block__button {
@@ -94,5 +94,19 @@ onUnmounted(() => document.removeEventListener('keyup', handleCloseOnEsc))
 .modal-block__button:hover {
   transform: rotateZ(360deg);
   transition: transform 500ms, transform 200ms ease-in-out;
+}
+
+.modal-block-enter-from {
+  opacity: 0;
+}
+
+.modal-block-leave-to {
+  opacity: 0;
+}
+
+.modal-block-enter-from .modal-block__content,
+.modal-block-leave-to .modal-block__content {
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
 }
 </style>

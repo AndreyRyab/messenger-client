@@ -3,11 +3,11 @@
     :disabled="isDisabled"
     :class="['button-block', { 'button-block__plain': isPlain }, { 'button-block_form': isForm }]"
     :type="type"
-    @click="$emit('on-click')"
+    @click.prevent="$emit('on-click')"
   >
-    <slot></slot>
+    <slot />
 
-    <span></span>
+    <span />
   </button>
 </template>
 
@@ -15,10 +15,10 @@
 import { computed } from 'vue';
 
 interface IProps {
-  isPlain: boolean;
-  isDisabled: boolean;
-  isForm: boolean;
-  isSubmit: boolean;
+  isDisabled?: boolean;
+  isForm?: boolean;
+  isSubmit?: boolean;
+  isPlain?: boolean;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -36,6 +36,7 @@ const type = computed(() => props.isSubmit ? 'submit' : 'button');
 <style scoped>
 .button-block {
   display: inline-flex;
+  height: max-content;
   border: none;
   border-radius: 50px;
   padding: 12px 16px;

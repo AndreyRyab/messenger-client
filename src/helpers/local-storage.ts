@@ -1,6 +1,6 @@
 export const checkIsLogged = () => {
-  if (localStorage.getItem('isLogged')) {
-    return localStorage.getItem('isLogged') === 'true';
+  if (localStorage.getItem('is-logged')) {
+    return localStorage.getItem('is-logged') === 'true';
   }
   return false;
 }

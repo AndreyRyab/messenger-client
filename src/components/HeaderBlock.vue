@@ -14,18 +14,21 @@
           <strong>{{ userName }}</strong>
         </span>
 
-        <ButtonBlock :is-plain="true" @onClick="onLogout">Выход</ButtonBlock>
+        <ButtonBlock :is-plain="true" @onClick="onLogout">Logout</ButtonBlock>
       </div>
 
       <div v-else class="header-block__actions-wrapper">
-        <ButtonBlock :is-plain="true" @onClick="openLogin">Вход</ButtonBlock>
+        <ButtonBlock :is-plain="true" @onClick="openLogin">Login</ButtonBlock>
         
-        <ButtonBlock :is-disabled="false" @onClick="openSignup">Регистрация</ButtonBlock>
+        <ButtonBlock :is-disabled="false" @onClick="openSignup">Register</ButtonBlock>
       </div>
 
-      <Transition appear>
-        <ModalBlock v-if="modalVisibility" v-model="modalVisibility" :action="actionType"/>
-      </Transition>
+      <Teleport to="body">
+        <ModalBlock
+          :show="isModalVisible"
+          :action="actionType"
+          @close="closeModal" />
+      </Teleport>
     </div>
   </header>
 </template>
@@ -45,8 +48,9 @@ const userStore = useUserStore();
 const isLoggedIn = computed(() => userStore.user.isAuthenticated);
 const userName = computed(() => userStore.user.email?.split('@')[0]);
 
-const modalVisibility = ref(false);
-const openModal = () => modalVisibility.value = true
+const isModalVisible = ref(false);
+const openModal = () => isModalVisible.value = true
+const closeModal = () => isModalVisible.value = false
 
 const actionType = ref<ActionAuthType | null>(null);
 
@@ -88,7 +92,7 @@ const onLogout = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: var(--border-radius);
+  border-radius: 16px 16px 16px 0;
   padding: 24px;
   background-color: var(--back-light);
 }

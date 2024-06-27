@@ -17,8 +17,10 @@
         <label
           for="email"
           class="auth-form__label"
-          >email</label
         >
+          email
+        </label>
+
         <input
           v-model="form.email"
           name="email"
@@ -68,6 +70,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 
+import router from '../router';
+
 import { useUserStore } from '../stores/user';
 
 import { ActionAuthType, IUser } from '../types';
@@ -88,15 +92,15 @@ const props = withDefaults(defineProps<{ action: ActionAuthType | null }>(), {
 const mapActionsToParams: Record<ActionAuthType, IActionParams> = {
   SIGNUP: {
     method: async () => await userStore.signup(form.value),
-    text: 'Регистрация',
+    text: 'Register',
   },
   LOGIN: {
     method: async () => await userStore.login(form.value),
-    text: 'Вход',
+    text: 'Login',
   },
   LOGOUT: {
     method: async () => await userStore.logout(),
-    text: 'Выход',
+    text: 'Logout',
   },
 };
 const actionName = computed(() => mapActionsToParams[props.action as ActionAuthType]?.text);
@@ -161,6 +165,9 @@ watch(
     if (!value) {
       userMessage.value = '';
       isBtnDisabled.value = false;
+    }
+    else {
+      router.push({ name: 'Chat' });
     }
   }
 );

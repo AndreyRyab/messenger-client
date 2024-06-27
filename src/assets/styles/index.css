@@ -8,20 +8,18 @@
   margin: 0;
 }
 
-html {
-  background-color: var(--back-dark);
-}
-
-html,
 body {
-  scrollbar-color: transparent;
-  scrollbar-width: 5px;
-
+  background-color: var(--back-dark);
   font-family: var(--roboto-font-stack);
   font-size: var(--font-size);
   line-height: 1.2;
   color: var(--black);
 }
+
+/* body {
+  height: 100vh;
+  overflow: hidden;
+} */
 
 #app {
   display: flex;
@@ -33,7 +31,7 @@ body {
 }
 
 main {
-  height: 100%;
+  flex: 1;
   background-color: var(--back-dark);
 }
 

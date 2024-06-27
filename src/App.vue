@@ -1,8 +1,6 @@
 <template>
   <HeaderBlock />
 
-  <NavBlock />
-
   <main>
     <router-view />
   </main>
@@ -11,37 +9,58 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 
 import { useUserStore } from './stores/user';
+import { useMessageStore } from './stores/message';
+import { useConnectionStore } from "./stores/connection";
+
+import { socket } from './socket';
 
 import router from './router';
 
-import HeaderBlock from './components/HeaderBlock.vue'
-import NavBlock from './components/NavBlock.vue'
-import FooterBlock from './components/FooterBlock.vue'
+import HeaderBlock from './components/HeaderBlock.vue';
+import FooterBlock from './components/FooterBlock.vue';
 
 import { checkIsLogged } from './helpers/local-storage';
 
-
 const userStore = useUserStore();
 
-router.beforeEach(async (to, _) => {
-  if (!userStore.user.isAuthenticated && to.name !== 'Home') {
+router.beforeEach(async (to) => {
+  if (!userStore.user.isAuthenticated && to.name === 'Chat') {
     return { name: 'Home' }
   }
-})
+});
 
-const checkIsTokenValid = () => {
+const checkIsTokenValid = async () => {
   if (!checkIsLogged()) return;
 
   try {
-    userStore.getUser();
+    await userStore.getUser();
+
+    if (userStore.user.isAuthenticated) {
+      router.push({ name: 'Chat' });
+    }
   } catch (error) {
     router.push({ path: '/' });
     return console.warn('Токен просрочен');
   }
-}
+};
 
-onMounted(() => checkIsTokenValid());
+onMounted(async () => await checkIsTokenValid());
+
+const messageStore = useMessageStore();
+const connectionStore = useConnectionStore();
+socket.off();
+messageStore.bindEvents();
+connectionStore.bindEvents();
+
+watch(
+  () => connectionStore.isConnected,
+  () => {
+    if (connectionStore.isConnected) {
+      console.log('socket connected: ', connectionStore.isConnected);
+    }
+  },
+);
 </script>

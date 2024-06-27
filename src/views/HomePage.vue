@@ -1,20 +1,17 @@
 <template>
   <div class="home-page">
-    <h1>Home</h1>
+    <p class="home-page__disclamer">Please register or login to start chatting</p>
   </div>
 </template>
-
-<script setup lang="ts">
-
-/* const onDrop = (event: any) => {
-  event.dataTransfer.files[0];
-  console.log('🚀 -> onDrop -> event.dataTransfer.files[0]:', event.dataTransfer.files[0]);
-
-} */
-</script>
 
 <style scoped>
 .home-page {
   color: aliceblue;
+}
+
+.home-page__disclamer {
+  margin-top: 100px;
+  font-size: 24px;
+  text-align: center;
 }
 </style>
