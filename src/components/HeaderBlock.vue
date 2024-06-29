@@ -3,9 +3,9 @@
     <div class="header-block__wrapper">
       <router-link to="/">
         <img
-          src="/vite.svg"
-          class="logo"
-          alt="Vite logo"
+          src="/smile-wink.svg"
+          class="header-block__logo"
+          alt="safe chat logo"
         />
       </router-link>
       
@@ -80,6 +80,11 @@ const onLogout = () => {
   width: 100%;
   background-color: var(--back-dark);
   border-bottom: 1px solid var(--back-dark);
+}
+
+.header-block__logo {
+  width: 40px;
+  height: 40px;
 }
 
 .header-block__actions-wrapper {
