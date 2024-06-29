@@ -1,11 +1,17 @@
 <template>
   <div :class="['message-item', { ['message-item_is-user']: isUser }]">
-    <p class="message-item__user">{{ userName }}:</p>
+    <template v-if="isStatusMessage">
+      <p class="message-item__user">{{ statusMessage }}</p>
+    </template>
+    
+    <template v-else>
+      <p class="message-item__user">{{ userName }}:</p>
 
-    <p class="message-item__text">
-      {{ message.text }}
-    </p>
-
+      <p class="message-item__text">
+        {{ message.text }}
+      </p>
+    </template>
+    
     <p class="message-item__date">
       {{ timeStamp }}
     </p>
@@ -16,6 +22,8 @@
 import { computed } from 'vue';
 
 import { useUserStore } from '../stores/user';
+
+import { CONNECTED, DISCONNECTED } from '../constants/status';
 
 import { IMessage } from '../types';
 
@@ -36,6 +44,15 @@ const timeStamp = computed(() => {
   const minutes = date.getMinutes();
 
   return `${date.getHours()}:${(minutes < 10 ? '0' : '') + minutes}`;
+});
+
+const isStatusMessage = computed(() => [CONNECTED, DISCONNECTED].includes(props.message.text));
+const statusMessage = computed(() => {
+  if (props.message.text === CONNECTED) {
+    return `${props.message.user} is connected`;
+  }
+
+  return `${props.message.user} is disconnected`;
 });
 </script>
 

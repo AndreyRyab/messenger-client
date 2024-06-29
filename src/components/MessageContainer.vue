@@ -7,6 +7,11 @@
       ref="bottomRef"
     />
 
+    <p
+      v-if="messageStore.userTyping"
+      class="message-container__typing-message">{{ messageStore.userTyping }} is typing...
+    </p>
+
     <span ref="bottomRef" class="message-container__anchor" />
   </div>
 </template>
@@ -54,5 +59,11 @@ watch(
 
 .message-container__anchor {
   padding-bottom: 200px;
+}
+
+.message-container__typing-message {
+  padding-top: 8px;
+  font-size: 14px;
+  color: var(--light-grey);
 }
 </style>

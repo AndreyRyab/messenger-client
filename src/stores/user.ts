@@ -76,14 +76,16 @@ export const useUserStore = defineStore('users', () => {
 
   async function getUser() {
     user.value.loadingStatus = IN_PROGRESS;
-
+    
     try {
       const { data } = await api({ endPoint: GET_USER });
-
+      
       user.value.loadingStatus = SUCCESS;
       user.value.isAuthenticated = true;
       user.value.email = data.email;
       user.value._id = data._id;
+
+      localStorage.setItem('user', data.email);
     } catch (error) {
       user.value.loadingStatus = FAILED;
 

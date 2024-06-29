@@ -9,6 +9,7 @@
         class="message-form__textarea"
         required
         autofocus
+        @input="setIsTyping"
         @keydown.enter.exact.prevent="onSubmit"
       />
 
@@ -49,6 +50,12 @@ const onSubmit = () => {
 };
 
 const isError = ref(false);
+
+const setIsTyping = () => {
+  isError.value = false;
+  
+  messageStore.setIsTyping();
+};
 </script>
 
 <style scoped>

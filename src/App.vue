@@ -13,7 +13,6 @@ import { onMounted, watch } from 'vue';
 
 import { useUserStore } from './stores/user';
 import { useMessageStore } from './stores/message';
-import { useConnectionStore } from "./stores/connection";
 
 import { socket } from './socket';
 
@@ -50,16 +49,14 @@ const checkIsTokenValid = async () => {
 onMounted(async () => await checkIsTokenValid());
 
 const messageStore = useMessageStore();
-const connectionStore = useConnectionStore();
 socket.off();
 messageStore.bindEvents();
-connectionStore.bindEvents();
 
 watch(
-  () => connectionStore.isConnected,
+  () => messageStore.isConnected,
   () => {
-    if (connectionStore.isConnected) {
-      console.log('socket connected: ', connectionStore.isConnected);
+    if (messageStore.isConnected) {
+      console.log('socket connected: ', messageStore.isConnected);
     }
   },
 );
