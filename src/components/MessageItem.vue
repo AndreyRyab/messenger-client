@@ -1,7 +1,7 @@
 <template>
-  <div :class="['message-item', { ['message-item_is-user']: isUser }]">
+  <div :class="['message-item', { ['message-item_is-user']: isUser }, { ['message-item_is-status']: isStatusMessage }]">
     <template v-if="isStatusMessage">
-      <p class="message-item__user">{{ statusMessage }}</p>
+      <p class="message-item__status-text">{{ statusMessage }}</p>
     </template>
     
     <template v-else>
@@ -10,11 +10,11 @@
       <p class="message-item__text">
         {{ message.text }}
       </p>
+
+      <p class="message-item__date">
+        {{ timeStamp }}
+      </p>
     </template>
-    
-    <p class="message-item__date">
-      {{ timeStamp }}
-    </p>
   </div>
 </template>
 
@@ -74,6 +74,11 @@ const statusMessage = computed(() => {
   background-color: var(--back-light-blue);
 }
 
+.message-item_is-status {
+  border: none;
+  background-color: transparent;
+}
+
 .message-item__user {
   font-size: 16px;
   font-weight: bold;
@@ -85,6 +90,11 @@ const statusMessage = computed(() => {
   font-size: 14px;
   color: var(--grey);
   margin-bottom: 8px;
+}
+
+.message-item__status-text {
+  font-size: 14px;
+  color: var(--light-grey);
 }
 
 .message-item__date {
