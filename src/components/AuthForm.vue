@@ -52,7 +52,7 @@
         :is-submit="true"
         @on-click="onSubmit"
       >
-        подтвердить
+        Submit
       </ButtonBlock>
 
       <ButtonBlock
@@ -61,7 +61,7 @@
         :is-disabled="isBtnDisabled"
         @on-click="onCancel"
       >
-        отменить
+        Cancel
       </ButtonBlock>
     </div>
   </form>
@@ -156,7 +156,7 @@ const isFailed = computed(() => userStore.user.loadingStatus === FAILED);
 watch(
   () => userStore.user.loadingStatus,
   (value) => {
-    if (value === IN_PROGRESS) userMessage.value = 'Подождите, пожалуйста...';
+    if (value === IN_PROGRESS) userMessage.value = 'Please wait...';
   }
 );
 watch(

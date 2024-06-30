@@ -18,6 +18,6 @@ export const handleError = (error: IError) => {
   }
 
   else {
-    throw new Error('Что-то пошло не так');
+    throw new Error('Something went wrong');
   }
 }
