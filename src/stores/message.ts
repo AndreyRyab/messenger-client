@@ -5,7 +5,6 @@ import { socket } from './../socket';
 import { useUserStore } from './user';
 
 import { IMessage } from '../types';
-import { CONNECTED } from '../constants/status';
 
 export const useMessageStore = defineStore('message', () => {
   const messages = ref<IMessage[]>([]);
@@ -29,8 +28,6 @@ export const useMessageStore = defineStore('message', () => {
   function bindEvents() {
     socket.on('connect', () => {
       isConnected.value = true;
-
-      createMessage(CONNECTED);
     });
 
     socket.on('message:list', (messageList: IMessage[]) => {
@@ -47,6 +44,12 @@ export const useMessageStore = defineStore('message', () => {
       setTimeout(() => {
         userTyping.value = '';
       }, 2000);
+    });
+
+    socket.on('connect_error', (err) => {
+      if (err.message === 'Invalid username') {
+        throw new Error('Invalid username');
+      }
     });
   };
 
