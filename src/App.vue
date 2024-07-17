@@ -31,6 +31,21 @@ router.beforeEach(async (to) => {
   }
 });
 
+const messageStore = useMessageStore();
+
+const startSocket = () => {
+  socket.off();
+  messageStore.bindEvents();
+
+  socket.auth = { username: userStore.user.email };
+  
+  socket.connect();
+
+  if (messageStore.isConnected) {
+    console.log('socket connected: ', messageStore.isConnected);
+  }
+};
+
 const checkIsTokenValid = async () => {
   if (!checkIsLogged()) return;
 
@@ -39,10 +54,6 @@ const checkIsTokenValid = async () => {
 
     if (userStore.user.isAuthenticated) {
       router.push({ name: 'Chat' });
-
-      socket.auth = { username: userStore.user.email };
-      
-      socket.connect();
     }
   } catch (error) {
     router.push({ path: '/' });
@@ -52,15 +63,11 @@ const checkIsTokenValid = async () => {
 
 onMounted(async () => await checkIsTokenValid());
 
-const messageStore = useMessageStore();
-socket.off();
-messageStore.bindEvents();
-
 watch(
-  () => messageStore.isConnected,
-  () => {
-    if (messageStore.isConnected) {
-      console.log('socket connected: ', messageStore.isConnected);
+  () => userStore.user.isAuthenticated,
+  (isAuthenticated) => {
+    if (isAuthenticated) {
+      startSocket();
     }
   },
 );

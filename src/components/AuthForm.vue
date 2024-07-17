@@ -34,8 +34,10 @@
         <label
           for="password"
           class="auth-form__label"
-          >password</label
         >
+          password
+        </label>
+
         <input
           v-model="form.password"
           name="password"
@@ -155,14 +157,14 @@ const isFailed = computed(() => userStore.user.loadingStatus === FAILED);
 
 watch(
   () => userStore.user.loadingStatus,
-  (value) => {
-    if (value === IN_PROGRESS) userMessage.value = 'Please wait...';
+  (status) => {
+    if (status === IN_PROGRESS) userMessage.value = 'Please wait...';
   }
 );
 watch(
   () => userStore.user.isAuthenticated,
-  (value) => {
-    if (!value) {
+  (isAuthenticated) => {
+    if (!isAuthenticated) {
       userMessage.value = '';
       isBtnDisabled.value = false;
     }

@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
+import { socket } from './../socket';
+
 import { api } from '../helpers/api';
 
 import { FAILED, IN_PROGRESS, SUCCESS } from '../constants/status';
@@ -101,6 +103,8 @@ export const useUserStore = defineStore('users', () => {
 
     try {
       await api({ endPoint: LOGOUT });
+      
+      socket.disconnect();
     } catch (error) {
       user.value.loadingStatus = FAILED;
 

@@ -30,11 +30,17 @@ export const useMessageStore = defineStore('message', () => {
       isConnected.value = true;
     });
 
+    socket.on('disconnect', () => {
+      isConnected.value = false;
+    });
+
     socket.on('message:list', (messageList: IMessage[]) => {
       messages.value = messageList;
     });
     
     socket.on('message:created', (message: IMessage) => {
+      console.log('message:', message);
+      
       messages.value.push(message);
     });
 
