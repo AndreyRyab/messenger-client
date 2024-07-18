@@ -1,0 +1,24 @@
+:root {
+  --gerbera-font-stack: 'Gerbera', 'Helvetica', Arial, sans-serif;
+  --roboto-font-stack: 'Roboto', sans-serif;
+  --font-size: 14px;
+
+  --tablet-landscape: 768px;
+
+  --back-dark: rgba(14, 14, 14, 1);
+  --back-dark-transparent: rgba(14, 14, 14, 0.8);
+  --back-light: rgba(247, 247, 247, 1);
+  --back-light-blue: #d6def1;
+
+  --light-grey: #c0c5cb;
+  --light-grey-contrast: #a6aaaf;
+  --alert: #e14848;
+  --grey: #4d5a68;
+  --black: #28323C;
+
+  --border-radius: 16px;
+  --border-radius-message: 16px 16px 16px 0;
+  --border-radius-message-user: 16px 16px 0 16px;
+}
+
+

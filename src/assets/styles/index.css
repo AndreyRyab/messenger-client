@@ -1,0 +1,59 @@
+@import url('./fonts.css');
+@import url('./variables.css');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  background-color: var(--back-dark);
+  font-family: var(--roboto-font-stack);
+  font-size: var(--font-size);
+  line-height: 1.2;
+  color: var(--black);
+}
+
+/* body {
+  height: 100vh;
+  overflow: hidden;
+} */
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+main {
+  flex: 1;
+  background-color: var(--back-dark);
+}
+
+button,
+a {
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:hover {
+  transform: scaleX(2px);
+  transition: all .3s ease;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--gerbera-font-stack);
+  letter-spacing: 0.01em;
+}
